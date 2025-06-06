@@ -654,7 +654,7 @@ bool GPUEngine::Launch(std::vector<ITEM> &hashFound,bool spinWait) {
     uint32_t *itemPtr = outputItemPinned + (i*ITEM_SIZE32 + 1);
     ITEM it;
 
-    it.kIdx = *((uint64_t*)(itemPtr + 12));
+    it.kIdx = *((uint64_t*)(itemPtr + 16));
 
     uint64_t *x = (uint64_t *)itemPtr;
     it.x.bits64[0] = x[0];
@@ -666,8 +666,8 @@ bool GPUEngine::Launch(std::vector<ITEM> &hashFound,bool spinWait) {
     uint64_t *d = (uint64_t *)(itemPtr + 8);
     it.d.bits64[0] = d[0];
     it.d.bits64[1] = d[1];
-    it.d.bits64[2] = 0;
-    it.d.bits64[3] = 0;
+    it.d.bits64[2] = d[2];
+    it.d.bits64[3] = d[3];
     it.d.bits64[4] = 0;
     if(it.kIdx % 2 == WILD) it.d.ModSubK1order(&wildOffset);
 

@@ -313,7 +313,7 @@ bool Kangaroo::AddToTable(Int *pos,Int *dist,uint32_t kType) {
 
 }
 
-bool Kangaroo::AddToTable(uint64_t h,int128_t *x,int128_t *d) {
+bool Kangaroo::AddToTable(uint64_t h,int256_t *x,int256_t *d) {
 
   int addStatus = hashTable.Add(h,x,d);
   if(addStatus== ADD_COLLISION) {
@@ -747,7 +747,7 @@ void Kangaroo::CreateJumpTable() {
   int jumpBit = rangePower / 2 + 1;
 #endif
 
-  if(jumpBit > 128) jumpBit = 128;
+  if(jumpBit > 256) jumpBit = 256;
   int maxRetry = 100;
   bool ok = false;
   double distAvg;

@@ -183,8 +183,12 @@ out[pos*ITEM_SIZE32 + 9] = ((uint32_t *)d)[0]; \
 out[pos*ITEM_SIZE32 + 10] = ((uint32_t *)d)[1]; \
 out[pos*ITEM_SIZE32 + 11] = ((uint32_t *)d)[2]; \
 out[pos*ITEM_SIZE32 + 12] = ((uint32_t *)d)[3]; \
-out[pos*ITEM_SIZE32 + 13] = ((uint32_t *)idx)[0]; \
-out[pos*ITEM_SIZE32 + 14] = ((uint32_t *)idx)[1]; \
+out[pos*ITEM_SIZE32 + 13] = ((uint32_t *)d)[4]; \
+out[pos*ITEM_SIZE32 + 14] = ((uint32_t *)d)[5]; \
+out[pos*ITEM_SIZE32 + 15] = ((uint32_t *)d)[6]; \
+out[pos*ITEM_SIZE32 + 16] = ((uint32_t *)d)[7]; \
+out[pos*ITEM_SIZE32 + 17] = ((uint32_t *)idx)[0]; \
+out[pos*ITEM_SIZE32 + 18] = ((uint32_t *)idx)[1]; \
 }
 
 // ---------------------------------------------------------------------------------------

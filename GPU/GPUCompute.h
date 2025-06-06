@@ -53,7 +53,7 @@ __device__ void ComputeKangaroos(uint64_t *kangaroos,uint32_t maxFound,uint32_t 
       jmp = (uint32_t)px[g][0] & (NB_JUMP-1);
 
 #ifdef USE_SYMMETRY
-      if(jmp==lastJump[g]) jmp = (lastJump[g] + 1) % NB_JUMP;
+      if(jmp==lastJump[g]) jmp = (lastJump[g] + 1) & (NB_JUMP - 1);
       lastJump[g] = jmp;
 #endif
 

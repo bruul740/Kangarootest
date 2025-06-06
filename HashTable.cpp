@@ -18,9 +18,7 @@
 #include "HashTable.h"
 #include <stdio.h>
 #include <math.h>
-#ifndef WIN64
 #include <string.h>
-#endif
 
 #define GET(hash,id) E[hash].items[id]
 
@@ -65,11 +63,12 @@ ENTRY *HashTable::CreateEntry(int256_t *x,int256_t *d) {
 
 }
 
-#define ADD_ENTRY(entry) {                 \
-  /* Shift the end of the index table */   \
-  for (int i = E[h].nbItem; i > st; i--)   \
-    E[h].items[i] = E[h].items[i - 1];     \
-  E[h].items[st] = entry;                  \
+#define ADD_ENTRY(entry) {                                                        \
+  /* Shift the end of the index table */                                          \
+  if(E[h].nbItem > st)                                                           \
+    memmove(E[h].items + st + 1, E[h].items + st,                                \
+            sizeof(ENTRY*) * (E[h].nbItem - st));                                \
+  E[h].items[st] = entry;                                                        \
   E[h].nbItem++;}
 
 void HashTable::Convert(Int *x,Int *d,uint32_t type,uint64_t *h,int256_t *X,int256_t *D) {
@@ -236,13 +235,16 @@ int HashTable::Add(Int *x,Int *d,uint32_t type) {
 
 }
 
-void HashTable::ReAllocate(uint64_t h,uint32_t add) {
 
-  E[h].maxItem += add;
-  ENTRY** nitems = (ENTRY**)malloc(sizeof(ENTRY*) * E[h].maxItem);
-  memcpy(nitems,E[h].items,sizeof(ENTRY*) * E[h].nbItem);
+void HashTable::ReAllocate(uint64_t h) {
+
+  uint32_t newSize = (E[h].maxItem==0)?16:(E[h].maxItem<<1);
+  ENTRY** nitems = (ENTRY**)malloc(sizeof(ENTRY*) * newSize);
+  if(E[h].items && E[h].nbItem)
+    memcpy(nitems,E[h].items,sizeof(ENTRY*) * E[h].nbItem);
   free(E[h].items);
   E[h].items = nitems;
+  E[h].maxItem = newSize;
 
 }
 
@@ -282,8 +284,8 @@ int HashTable::Add(uint64_t h,ENTRY* e) {
   }
 
   if(E[h].nbItem >= E[h].maxItem - 1) {
-    // We need to reallocate
-    ReAllocate(h,4);
+    // Grow by doubling the current size
+    ReAllocate(h);
   }
 
   // Search insertion position

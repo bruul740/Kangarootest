@@ -533,11 +533,11 @@ void Kangaroo::Check(std::vector<int> gpuId,std::vector<int> gridSize) {
     _1.SetInt32(1);
     for(int r = 0; r<NB_RUN; r++) {
       for(int i = 0; i<nb; i++) {
-        uint64_t jmp = (cpuPx[i].bits64[0] % NB_JUMP);
+        uint64_t jmp = cpuPx[i].bits64[0] & (NB_JUMP - 1);
 
 #ifdef USE_SYMMETRY
         // Limit cycle
-        if(jmp == lastJump[i]) jmp = (lastJump[i] + 1) % NB_JUMP;
+        if(jmp == lastJump[i]) jmp = (lastJump[i] + 1) & (NB_JUMP - 1);
 #endif
 
         Point J(&jumpPointx[jmp],&jumpPointy[jmp],&_1);

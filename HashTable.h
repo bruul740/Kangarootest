@@ -78,7 +78,7 @@ public:
   void SaveTable(FILE* f,uint32_t from,uint32_t to,bool printPoint=true);
   void LoadTable(FILE *f);
   void LoadTable(FILE* f,uint32_t from,uint32_t to);
-  void ReAllocate(uint64_t h,uint32_t add);
+  void ReAllocate(uint64_t h);
   void SeekNbItem(FILE* f,bool restorePos = false);
   void SeekNbItem(FILE* f,uint32_t from,uint32_t to);
 

@@ -379,9 +379,9 @@ void Kangaroo::SolveKeyCPU(TH_PARAM *ph) {
     for(int g = 0; g < CPU_GRP_SIZE; g++) {
 
 #ifdef USE_SYMMETRY
-      uint64_t jmp = ph->px[g].bits64[0] % (NB_JUMP/2) + (NB_JUMP / 2) * ph->symClass[g];
+      uint64_t jmp = (ph->px[g].bits64[0] & ((NB_JUMP/2)-1)) + (NB_JUMP / 2) * ph->symClass[g];
 #else
-      uint64_t jmp = ph->px[g].bits64[0] % NB_JUMP;
+      uint64_t jmp = ph->px[g].bits64[0] & (NB_JUMP - 1);
 #endif
 
       Int *p1x = &jumpPointx[jmp];
@@ -396,9 +396,9 @@ void Kangaroo::SolveKeyCPU(TH_PARAM *ph) {
     for(int g = 0; g < CPU_GRP_SIZE; g++) {
 
 #ifdef USE_SYMMETRY
-      uint64_t jmp = ph->px[g].bits64[0] % (NB_JUMP / 2) + (NB_JUMP / 2) * ph->symClass[g];
+      uint64_t jmp = (ph->px[g].bits64[0] & ((NB_JUMP/2)-1)) + (NB_JUMP / 2) * ph->symClass[g];
 #else
-      uint64_t jmp = ph->px[g].bits64[0] % NB_JUMP;
+      uint64_t jmp = ph->px[g].bits64[0] & (NB_JUMP - 1);
 #endif
 
       Int *p1x = &jumpPointx[jmp];
